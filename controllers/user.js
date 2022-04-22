@@ -1,3 +1,4 @@
+const user = require('../models/user')
 const User = require('../models/user')
 
 module.exports = {
@@ -15,6 +16,21 @@ module.exports = {
         User.findById(userId)
         .then(user =>{
             res.json({user})
+        })
+        .catch(error =>{
+            res.json({error: error})
+        })
+    },
+    updat:(req,res) =>{
+        let userId = req.params.uid
+        let userInfo = {
+            name: req.body.name,
+            age: req.body.age,
+            email: req.body.email
+        }
+        User.findByIdAndUpdate(userId,{$set: userInfo})
+        .then(user=>{
+            res.json({message:"user information has updated"})
         })
         .catch(error =>{
             res.json({error: error})
