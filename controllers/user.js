@@ -35,5 +35,15 @@ module.exports = {
         .catch(error =>{
             res.json({error: error})
         })
+    },
+    delete: (req,res) =>{
+        let userId = req.params.uid
+        User.findByIdAndRemove(userId)
+        .then( ()=>{
+            res.json({message:"user is deleted"})
+        })
+        .catch(error =>{
+            res.json({error: error})
+        })
     }
 }
