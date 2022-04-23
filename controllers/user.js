@@ -44,5 +44,19 @@ module.exports = {
         .catch(error =>{
             res.json({error: error})
         })
+    },
+    create:(req,res)=>{
+        let newUser = new User ({
+            name: req.body.name,
+            email: req.body.email,
+            age: req.body.age
+        })
+        User.register(newUser, req.body.password,(error,user)=>{
+            if(user){
+                res.json({message: "User inserted"})
+            } else {
+                res.json({error :error })
+            }
+        })
     }
 }
