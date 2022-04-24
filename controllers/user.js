@@ -1,3 +1,7 @@
+// const { Passport } = require('passport/lib')
+// const jsonwebtoken = require('jsonwebtoken')
+const passport = require('passport')
+
 const User = require('../models/user')
 
 module.exports = {
@@ -56,6 +60,26 @@ module.exports = {
                 res.json({message: "User inserted"})
             } else {
                 res.json({error :error })
+            }
+        })
+    },
+    authenticate: (req,res) =>{
+        passport.authenticate('local', (error,user)=>{
+            if(user){
+                let signedToken = jsonweb.sign({
+                    data: user._id,
+                    exp: new Date().setDate(new Date().getDate()+1)
+                },'Lacorbi86')
+                res.json({
+                    success: true,
+                    token: signedToken
+                })
+            }
+            else{
+                res.json({
+                    success: false,
+                    message: 'could not authenticate user'
+                })
             }
         })
     }
